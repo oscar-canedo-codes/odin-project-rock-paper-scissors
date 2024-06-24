@@ -1,105 +1,147 @@
-console.log("hola puta");
+/* FUNCTION getComputerChoice: 
+    DEFINE array choices with "rock", "paper", "scissors"
+    GENERATE random index between 0 and length of choices array
+    RETURN choice at random index
 
-// PSUEDO CODE
+    FUNCTION testGetComputerChoice:
+      FOR i from 0 to 9:
+      CALL getComputerChoice
+      LOG the result 
+*/
 
-/* Step 2: Write the logic to get the computer choice
+// Function to get the computer's choice
+const getComputerChoice = () => {
+  // Array of possible choices
+  const choices = ["rock", "paper", "scissors"];
+  // Generate a random index and round to the nearest whole number
+  const randomIndex = Math.floor(Math.random() * choices.length);
+  // Return the choice at the random index
+  return choices[randomIndex];
+};
+// Test getComputerChoice function
+const testGetComputerChoice = () => {
+  for (let i = 0; i < 10; i++) {
+    console.log(getComputerChoice());
+  }
+};
 
-Your game will be played against the computer. You will write a function that randomly returns “rock”, “paper” or “scissors”.
+/* FUNCTION getHumanChoice:
+    PROMPT user to enter "Rock", "Paper", or "Scissors" and STORE in variable choice
+    CONVERT choice to lowercase
 
-    Create a new function named getComputerChoice.
-    Write the code so that getComputerChoice will randomly return one of the following string values: “rock”, “paper” or “scissors”.
-        Hint: The Math.random method returns a random number that’s greater than or equal to 0 and less than 1. Think about how you can use this to conditionally return one of the multiple choices.
-    Test that your function returns what you expect using console.log or the browser developer tools before advancing to the next step.
+    IF choice is "rock" OR choice is "paper" OR choice is "scissors":
+        RETURN choice
+    ELSE:
+        ALERT user that their choice is invalid
+        CALL getHumanChoice function again (recursive call)
  */
 
-const getComputerChoice = () => {
-  // -> randomizedNumber, Math.random()
-  // -> Conditional values: rock || paper || scissors
-  // -> Return string
-};
-
-/* Step 3: Write the logic to get the human choice
-    
-    Your game will be played by a human player. You will write a function that takes the user choice and returns it.
-    
-    Create a new function named getHumanChoice.
-    Write the code so that getHumanChoice will return one of the valid choices depending on what the user inputs.
-    Hint: Use the prompt method to get the user’s input.
-    Test what your function returns by using console.log.
-    */
-
+// Function to get the human player's choice by recursion
 const getHumanChoice = () => {
-  // -> Prompt = userInput;
-  // -> Validate
-  // -> const result = validated userInput;
-  // -> return string
+  // Prompt user for their choice and convert to lowercase
+  const choice = prompt("Rock, Paper, or Scissors").toLowerCase();
+
+  // Check if the choice is valid
+  if (["rock", "paper", "scissors"].includes(choice)) {
+    // Return the valid choice
+    return choice;
+  } else {
+    // Alert the user about the invalid choice
+    alert("Invalid choice. Please enter Rock, Paper, or Scissors.");
+    // Call the function recursively until a valid choice is entered
+    return getHumanChoice();
+  }
 };
 
-/* Step 4: Declare the players score variables
-    
-    Your game will keep track of the players score. You will write variables to keep track of the players score.
-    
-    Create two new variables named humanScore and computerScore in the global scope.
-    Initialize those variables with the value of 0.
-    */
+/* FUNCTION playGame:
+INITIALIZE humanScore to 0
+INITIALIZE computerScore to 0
 
-/* Step 5: Write the logic to play a single round
-   
-   Your game will be played round by round. You will write a function that takes the human and computer player choices as arguments, plays a single round, increments the round winner’s score and logs a winner announcement.
-   
-   Create a new function named playRound.
-   Define two parameters for playRound: humanChoice and computerChoice. Use these two parameters to take the human and computer choices as arguments.
-   Make your function’s humanChoice parameter case-insensitive so that players can input “rock”, “ROCK”, “RocK”, or other variations.
-   Write the code for your playRound function to console.log a string value representing the round winner, such as: “You lose! Paper beats Rock”.
-   Increment the humanScore or computerScore variable based on the round winner.
-   */
+DEFINE FUNCTION playRound(humanChoice, computerChoice):
+  CONVERT humanChoice to lowercase
 
-/* Step 6: Write the logic to play the entire game
-  
-  Your game will play 5 rounds. You will write a function named playGame that calls playRound to play 5 rounds, keeps track of the scores and declares a winner at the end.
-  
-  Create a new function named playGame.
-  Move your playRound function and score variables so that they’re declared inside of the new playGame function
-  Play 5 rounds by calling playRound 5 times.
-  Hint: When you assign a function call to a variable, the return value of that function is assigned to the variable. Accessing the variable afterward will only provide the assigned value; it doesn’t recall the function. You need to recall the choice functions to get new choices for each round.
-  Re-work your previous functions or create more helper functions if necessary. Specifically, you may want to change the return values to something more useful.
-  If you already know about loops, you can use them. If not, don’t worry! Loops will be covered in the next lesson.
+    DETERMINE winner based on if-else structure on possible winning for human player:
+    rock > scissors
+    scissors > paper
+    paper > rock
+
+  IF humanChoice equals computerChoice
+    LOG "It's a tie!"
+  ELSE IF humanChoice beats computerChoice: 
+    INCREMENT humanScore  
+    LOG "You Win! humanChoice beats computerChoice"
+  ELSE: 
+    INCREMENT computerScore
+    LOG "You lose! computerChoice beats humanChoice"
+  LOG current scores
+
+  FOR 1 to 5:
+    CALL getHumanChoice
+    CALL getComputerCoice
+    CALL playRound with humanChoice and computerChoice
+
+  IF humanScore > computerScore:
+    LOG "Congratulations! You won the game!"
+  ELSE IF 
+    LOG "You lost the game!"
+  ELSE:
+  LOG "The game is a tie!"
   */
 
+// Function to play full game
 const playGame = () => {
+  // INITIALIZE score variables for human and computer
   let humanScore = 0;
   let computerScore = 0;
 
+  // Function to play a single round
   const playRound = (humanChoice, computerChoice) => {
-    const humanSelection = getHumanChoice();
-    const computerSelection = getComputerChoice();
+    // Convert humanChoice to lowercase to handle case insensitivity
+    humanChoice = humanChoice.toLowerCase();
 
-    // -> getHumanChoice, case-insensitive
-
-    // -> getComputerChoice, conditional:
-    // rock > scissors
-    // scissors > paper
-    // paper > scissors
-
-    // humanChoice === computerChoice,
-    // result tie
-
-    // humanChoice !==  computerChoice,
-    // result winnerScore
-
-    //  const winnerScore for (i= 0, i>5, i++);
-
-    // return console.log ('')
-
-    /*   Hint: When you assign a function call to a variable, the return value of that function is assigned to the variable. Accessing the variable afterward will only provide the assigned value; it doesn’t recall the function. You need to recall the choice functions to get new choices for each round.
-  Re-work your previous functions or create more helper functions if necessary. Specifically, you may want to change the return values to something more useful. */
+    if (humanChoice === computerChoice) {
+      console.log("It's a tie!");
+    } else if (
+      (humanChoice === "rock" && computerChoice === "scissors") ||
+      (humanChoice === "paper" && computerChoice === "rock") ||
+      (humanChoice === "scissors" && computerChoice === "paper")
+    ) {
+      // Increment human score if human wins
+      humanScore++;
+      console.log(
+        `You win! ${
+          humanChoice.charAt(0).toUpperCase() + humanChoice.slice(1)
+        } beats ${computerChoice}`
+      );
+    } else {
+      // Increment computer score if computer wins
+      computerScore++;
+      console.log(
+        `You lose! ${
+          computerChoice.charAt(0).toUpperCase() + computerChoice.slice(1)
+        } beats ${humanChoice}`
+      );
+    }
+    // Log the current scores
+    console.log(`Scores -> Human: ${humanScore}, Computer: ${computerScore}`);
   };
 
-  playRound(humanSelection, computerSelection);
+  // Play 5 turns
+  for (let i = 0; i < 5; i++) {
+    const humanSelection = getHumanChoice();
+    const computerSelection = getComputerChoice();
+    playRound(humanSelection, computerSelection);
+  }
 
-
-
-  // -> function playRound within scope
-
-  // -> console.log(winnerGame);
+  // Determine the overall winner
+  if (humanScore > computerScore) {
+    console.log("Congratulations! You won the game!");
+  } else if (computerScore > humanScore) {
+    console.log("You lost the game!");
+  } else {
+    console.log("Game tied!");
+  }
 };
+
+// Start the game
+playGame();
