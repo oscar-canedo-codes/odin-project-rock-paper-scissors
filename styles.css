@@ -1,0 +1,160 @@
+:root {
+  --background: #0775b5;
+  --color-sub: #28334aff;
+  --eggshell: #fff3f3;
+}
+
+html {
+  box-sizing: border-box;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica,
+    Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  font-weight: 900;
+  font-size: 10px;
+  color: var(--eggshell);
+  text-shadow: 0 2px 0 rgba(0, 0, 0, 0.07);
+}
+
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
+}
+
+body {
+  background-size: 340px, auto;
+  min-height: calc(100vh - 100px);
+  margin: 20px;
+  background-color: var(--background);
+  background-attachment: fixed;
+  letter-spacing: 8px;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 0 0 5px 0;
+}
+
+/* LAYOUT */
+.layout {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 10px;
+}
+
+/* HEADER */
+.header__title {
+  justify-content: center;
+  align-content: center;
+  display: flex;
+}
+
+/* BOARDS */
+.scoreboard {
+  /* Score section */
+  display: flex;
+  justify-content: center;
+  margin-bottom: 25px;
+  font-size: 40px;
+  color: var(--eggshell);
+}
+
+/* .scoreboard__player-score,
+.scoreboard__computer-score {
+
+} */
+
+.scoreboard__divider {
+  margin: 0px 50px;
+}
+
+.game__heading {
+  /* Heading within game block */
+  margin: 50px 0;
+  text-align: center;
+  color: var(--color-sub);
+  font-size: 55px;
+  font-weight: 400;
+}
+
+.message {
+  text-align: center;
+  font-size: 14px;
+  font-weight: 500;
+  margin-bottom: 20px;
+}
+
+/* CARDS */
+.card-container {
+  text-align: center;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+
+.card card--fire {
+  grid-column: 1/2;
+}
+
+.card card--water {
+  grid-column: 2/3;
+}
+
+.card card--grass {
+  grid-column: 3/-1;
+}
+.card-image {
+  /* Can be used as a modifier class for card image element */
+  margin-bottom: 10px;
+  cursor: pointer;
+  position: relative;
+}
+
+.card-image:hover {
+  top: -5px;
+  border: 3px solid yellow;
+}
+
+.card-text {
+  /* Can be used as a modifier class for card text element */
+  text-transform: capitalize;
+  font-weight: 700;
+  font-size: 25px;
+  color: var(--color-sub);
+}
+/* SELECTIONS */
+
+.selections {
+  /* Player and computer selection section */
+  margin-top: 50px;
+  display: flex;
+  justify-content: center;
+}
+
+.selections__player,
+.selections__computer {
+  /* Player and computer selection elements within selections block */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0px 20px;
+}
+
+.selections__player-heading,
+.selections__computer-heading {
+  /* Headings within selection elements */
+  font-size: 35px;
+  font-weight: 500;
+  margin-bottom: 10px;
+}
+
+.selections__player-choice,
+.selections__computer-choice {
+  /* Choice elements within selection elements */
+  display: flex;
+  align-items: center;
+  flex-direction: column-reverse;
+}

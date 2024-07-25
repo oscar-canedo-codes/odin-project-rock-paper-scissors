@@ -1,113 +1,128 @@
-/* Create and append div elements: */
-
-// Serve as a container for buttons
-const container = document.createElement("div");
-container.setAttribute("id", "container");
-document.body.appendChild(container);
-
-// Show the game result)
-const resultDiv = document.createElement("div");
-resultDiv.setAttribute("id", "result");
-document.body.appendChild(resultDiv);
-
-// Display the computer's choice)
-const computerChoiceDiv = document.createElement("div");
-computerChoiceDiv.setAttribute("id", "computerChoice");
-document.body.appendChild(computerChoiceDiv);
-
-// Display running score
-const scoreDiv = document.createElement("div");
-scoreDiv.setAttribute("id", "score");
-document.body.appendChild(scoreDiv);
-
-// Display game winner after reaching 5 points
-const gameWinnerDiv = document.createElement("div");
-gameWinnerDiv.setAttribute("id", "winner");
-document.body.appendChild(gameWinnerDiv);
-
-// Display game over
-
-const gameOverDiv = document.createElement("div");
-document.body.appendChild(gameOverDiv);
-
-// Function to get the computer's choice
-const getComputerChoice = () => {
-  const choices = ["rock", "paper", "scissors"];
-  const randomIndex = Math.floor(Math.random() * choices.length);
-  return choices[randomIndex];
-};
-
-// Initialize and state management
-let humanScore = 0;
+/* STATE MANAGEMENT */
+let playerScore = 0;
 let computerScore = 0;
 let roundsPlayed = 0;
 const totalRounds = 5;
 
-// Function to play single round
-const playRound = (humanChoice) => {
+/* DOM NODES */
+// Score count
+const scorePlayer = document.querySelector(".scoreboard__player-score");
+const scoreComputer = document.querySelector(".scoreboard__computer-score");
+
+// Running score and game result (assuming this element holds both)
+const message = document.querySelector(".message");
+
+// Choice selections
+const selectionPlayer = document.querySelector(".selections__player-choice");
+const selectionComputer = document.querySelector(
+  ".selections__computer-choice"
+);
+
+/* GAME LOGIC */
+
+// FUNCTION -> To get the computer's choice
+const getComputerSelection = () => {
+  let computerNumber = random(3);
+  let computerSelection = "";
+
+  switch (computerNumber) {
+    case 1:
+      computerSelection = "fire";
+      break;
+    case 2:
+      computerSelection = "water";
+      break;
+    case 3:
+      computerSelection = "grass";
+      break;
+    default:
+      break;
+  }
+  return computerSelection;
+};
+
+// FUNCTION -> to play single round
+const playRound = (playerSelection) => {
+  const computerSelection = getComputerSelection();
+  let gameResult = "";
+
+  selectionPlayer.textContent = `Player chose ${playerSelection}`;
+
   if (roundsPlayed > totalRounds) {
-    gameOverDiv.textContent = `Game Over!`;
+    message.textContent = `Game Over!`;
     return;
   }
 
-  const computerChoice = getComputerChoice();
-  let gameResult = "";
-
-  // Determine the outcome
-  if (humanChoice === computerChoice) {
+  // DETERMINE the outcome
+  if (playerSelection === computerSelection) {
     gameResult = "It's a tie!";
   } else if (
-    (humanChoice === "rock" && computerChoice === "scissors") ||
-    (humanChoice === "paper" && computerChoice === "rock") ||
-    (humanChoice === "scissors" && computerChoice === "paper")
+    (playerSelection === "fire" && computerSelection === "grass") ||
+    (playerSelection === "water" && computerSelection === "fire") ||
+    (playerSelection === "grass" && computerSelection === "water")
   ) {
-    humanScore++;
-    gameResult = `You win! ${humanChoice} beats ${computerChoice}`;
+    playerScore++;
+    gameResult = `You win! ${playerSelection} beats ${computerSelection}`;
   } else {
     computerScore++;
-    gameResult = `You lose! ${computerChoice} beats ${humanChoice}`;
+    gameResult = `You lose! ${computerSelection} beats ${playerSelection}`;
   }
-  // Running score
-  scoreDiv.textContent = `Scores -> Human: ${humanScore}, Computer ${computerScore}`;
-  roundsPlayed++;
 
-  // Update the result div
-  resultDiv.textContent = gameResult;
+  // Update the display after each round
+  updateDisplay(gameResult, computerSelection);
 
-  // Update the computer choice div
-  computerChoiceDiv.textContent = `Computer chose ${computerChoice}`;
+  // DETERMINE the overall winner after all rounds
+  checkWinner();
 };
 
-// Determine the overall winner
-while (roundsPlayed > totalRounds) {
-  if (humanScore > computerScore) {
-    gameWinnerDiv.textContent = `You win the game!`;
-  } else if (computerScore > humanScore) {
-    gameWinnerDiv.textContent = `You lost the game!`;
-  } else {
-    gameWinnerDiv.textContent = `Game tied!`;
-  }
+/* DISPLAY */
+const updateDisplay = (gameResult, computerSelection) => {
 
-  roundsPlayed++;
+
+  // Score count
+  scorePlayer.textContent = playerScore;
+  scoreComputer.textContent = computerScore;
+
+  // Game result (including running score)
+  message.textContent = `${gameResult} - Scores: Player ${playerScore}, Computer ${computerScore}`;
+
+  // Choice Selections
+  selectionComputer.textContent = `Computer chose ${computerSelection}`;
+
+};
+
+// FUNCTION -> Check winner
+const checkWinner = () => {
+  if (roundsPlayed > totalRounds) {
+    if (playerScore > computerScore) {
+      message.textContent = `You win the game!`;
+    } else if (computerScore > playerScore) {
+      message.textContent = `You lost the game!`;
+    } else {
+      message.textContent = `Game tied!`;
+    }
+  }
+};
+
+/* EVENT HANDLERS */
+
+const fireButton = document.querySelector(".card.card--fire");
+fireButton.addEventListener("click", () => {
+  playRound("fire");
+});
+
+const waterButton = document.querySelector(".card.card--water");
+waterButton.addEventListener("click", () => {
+  playRound("water");
+});
+
+const grassButton = document.querySelector(".card.card--grass");
+grassButton.addEventListener("click", () => {
+  playRound("grass");
+});
+
+/* HELPER FUNCTION */
+
+function random(number) {
+  return Math.floor(Math.random() * number + 1);
 }
-
-// Function to create buttons
-const createButton = (choice, color) => {
-  const button = document.createElement("button");
-  button.textContent = choice.toUpperCase();
-  button.value = choice;
-  button.setAttribute("style", `color: ${color}; background: white;`);
-
-  // Add event listener to button
-  button.addEventListener("click", () => {
-    // Call playRound with the button's value (human choice)
-    playRound(choice);
-  });
-
-  container.appendChild(button);
-};
-
-// Create buttons for rock, paper, scissors
-createButton("rock", "green");
-createButton("paper", "blue");
-createButton("scissors", "red");
