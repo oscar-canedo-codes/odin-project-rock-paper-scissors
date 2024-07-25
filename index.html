@@ -1,12 +1,58 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <script src="javascript.js" defer></script> </head>
-    <link rel="stylesheet" href="styles.css">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>fire water grass</title>
+    <script src="javascript.js" defer></script>
+    <link rel="stylesheet" href="styles.css" />
+</head>
+
 <body>
-    <h1>ROCK, PAPER, SCISSORS</h1>
+
+    <!-- LAYOUT -->
+    <main class="layout">
+        <!-- HEADER -->
+        <header class="header">
+            <h1 class="header__title">POKÉMON DUEL</h1>
+            <div class="message"></div>
+        </header>
+        <!-- BOARDS -->
+        <div class="scoreboard">
+            <div class="scoreboard__player-score">0</div>
+            <div class="scoreboard__divider">-</div>
+            <div class="scoreboard__computer-score">0</div>
+        </div>
+        <div class="message"></div>
+        <!-- CARDS -->
+        <div class="card-container">
+            <button class="card card--fire" data-message="fire">
+                <img src="assets/gen-vi-starters/fire_01.png" alt="fire" class="card__image" />
+                <p class="card__text">fire</p>
+            </button>
+            <button class="card card--water" data-message="water">
+                <img src="assets/gen-vi-starters/water_01.png" alt="water" class="card__image" />
+                <p class="card__text">water</p>
+            </button>
+            <button class="card card--grass" data-message="grass">
+                <img src="assets/gen-vi-starters/grass_01.png" alt="grass" class="card__image" />
+                <p class="card__text">grass</p>
+            </button>
+        </div>
+        <!-- SELECTIONS -->
+        <div class="selections">
+            <div class="selections__player">
+                <h2 class="selections__player-heading">Player</h2>
+                <div class="selections__player-choice" data-selection></div>
+            </div>
+            <div class="selections__computer">
+                <h2 class="selections__computer-heading">Computer</h2>
+                <div class="selections__computer-choice" data-selection></div>
+            </div>
+        </div>
+        </div>
+    </main>
 </body>
+
 </html>
